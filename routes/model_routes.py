@@ -14,11 +14,13 @@ def predict_apelsick_route():
     image_bytes = file.read()
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((224, 224), Image.NEAREST)
-    pred_img, confidence = predict_apelsick(img)
+    pred_img, confidence, description, solution = predict_apelsick(img)
     return jsonify({
         "prediction": pred_img, 
-        "confidence": confidence
-        })
+        "confidence": confidence,
+        "description": description,
+        "solution": solution
+    })
 
 @predict_blueprint.route('/predict/banana', methods=["GET", "POST"])
 def predict_banana_route():
@@ -29,11 +31,13 @@ def predict_banana_route():
     image_bytes = file.read()
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((150, 150), Image.NEAREST)
-    pred_img, confidence = predict_banana(img)
+    pred_img, confidence, description, solution = predict_banana(img)
     return jsonify({
         "prediction": pred_img, 
-        "confidence": confidence
-        })
+        "confidence": confidence,
+        "description": description,
+        "solution": solution
+    })
 
 @predict_blueprint.route('/predict/corn', methods=["GET", "POST"])
 def predict_corn_route():
@@ -44,11 +48,13 @@ def predict_corn_route():
     image_bytes = file.read()
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((150, 150), Image.NEAREST)
-    pred_img, confidence = predict_corn(img)
+    pred_img, confidence, description, solution = predict_corn(img)
     return jsonify({
         "prediction": pred_img, 
-        "confidence": confidence
-        })
+        "confidence": confidence,
+        "description": description,
+        "solution": solution
+    })
 
 @predict_blueprint.route('/predict/orange', methods=["GET", "POST"])
 def predict_orange_route():
@@ -59,11 +65,13 @@ def predict_orange_route():
     image_bytes = file.read()
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((64, 64), Image.NEAREST)
-    pred_img, confidence = predict_orange(img)
+    pred_img, confidence, description, solution = predict_orange(img)
     return jsonify({
         "prediction": pred_img, 
-        "confidence": confidence
-        })
+        "confidence": confidence,
+        "description": description,
+        "solution": solution
+    })
 
 @predict_blueprint.route('/predict/potato', methods=["GET", "POST"])
 def predict_potato_route():
@@ -74,11 +82,13 @@ def predict_potato_route():
     image_bytes = file.read()
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((64, 64), Image.NEAREST)
-    pred_img, confidence = predict_potato(img)
+    pred_img, confidence, description, solution = predict_potato(img)
     return jsonify({
         "prediction": pred_img, 
-        "confidence": confidence
-        })
+        "confidence": confidence,
+        "description": description,
+        "solution": solution
+    })
 
 @predict_blueprint.route('/predict/rice', methods=["GET", "POST"])
 def predict_rice_route():
@@ -89,11 +99,13 @@ def predict_rice_route():
     image_bytes = file.read()
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((224, 224), Image.NEAREST)
-    pred_img, confidence = predict_rice(img)
+    pred_img, confidence, description, solution = predict_rice(img)
     return jsonify({
         "prediction": pred_img, 
-        "confidence": confidence
-        })
+        "confidence": confidence,
+        "description": description,
+        "solution": solution
+    })
 
 @predict_blueprint.route('/predict/cassava', methods=["GET", "POST"])
 def predict_cassava_route():
@@ -104,11 +116,13 @@ def predict_cassava_route():
     image_bytes = file.read()
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((256, 256), Image.NEAREST)
-    pred_img, confidence = predict_cassava(img)
+    pred_img, confidence, description, solution = predict_cassava(img)
     return jsonify({
         "prediction": pred_img, 
-        "confidence": confidence
-        })
+        "confidence": confidence,
+        "description": description,
+        "solution": solution
+    })
 
 @predict_blueprint.route('/predict/tomato', methods=["GET", "POST"])
 def predict_tomato_route():
@@ -119,8 +133,10 @@ def predict_tomato_route():
     image_bytes = file.read()
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((256, 256), Image.NEAREST)
-    pred_img, confidence = predict_tomato(img)
+    pred_img, confidence, description, solution = predict_tomato(img)
     return jsonify({
         "prediction": pred_img, 
-        "confidence": confidence
-        })
+        "confidence": confidence,
+        "description": description,
+        "solution": solution
+    })

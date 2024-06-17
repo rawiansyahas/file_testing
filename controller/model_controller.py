@@ -1,6 +1,7 @@
 import numpy as np
 from PIL import Image
 from tensorflow import keras
+from information.model_info import apelsick_info, banana_info, corn_info, orange_info, potato_info, rice_info, cassava_info, tomato_info
 
 # Load both models
 apelsick_model_path = 'models/apelsick.h5'
@@ -13,7 +14,7 @@ banana_labels = ['Cordana', 'Sigatoka', 'Pestalotiopsis', 'Healthy']
 
 corn_model_path = 'models/ver2_corn_inception_model.h5'
 corn_model = keras.models.load_model(corn_model_path)
-corn_labels = ['Corn_Healthy', 'Corn_Gray_Leaf_Spot', 'Corn_Common_Rust', 'Corn_Northern_Leaf_Blight']
+corn_labels = ['Corn Healthy', 'Corn Gray Leaf Spot', 'Corn Common Rust', 'Corn Northern Leaf Blight']
 
 orange_model_path = 'models/orange_fruitdisease_prediction_model.h5'
 orange_model = keras.models.load_model(orange_model_path)
@@ -21,11 +22,11 @@ orange_labels = ['Blackspot', 'Cancer', 'Fresh', 'Greening']
 
 potato_model_path = 'models/potato_leafdisease_prediction_model.h5'
 potato_model = keras.models.load_model(potato_model_path)
-potato_labels = ['Early_Blight', 'Healthy', 'Late_Blight']
+potato_labels = ['Early Blight', 'Healthy', 'Late Blight']
 
 rice_model_path = 'models/rice_disease.h5'
 rice_model = keras.models.load_model(rice_model_path)
-rice_labels = ['Brown_Spot', 'Healthy', 'Leaf_Blast', 'Neck_Blast']
+rice_labels = ['Brown Spot', 'Healthy', 'Leaf Blast', 'Neck_Blast']
 
 cassava_model_path = 'models/singconk.h5'
 cassava_model = keras.models.load_model(cassava_model_path)
@@ -33,9 +34,7 @@ cassava_labels = ['Cassava Bacterial Blight', 'Cassava Brown Streak Disease', 'C
 
 tomato_model_path = 'models/tomatosick.h5'
 tomato_model = keras.models.load_model(tomato_model_path)
-tomato_labels = ['Tomato_mosaic_virus', 'Target_Spot', 'Bacterial_spot', 'Tomato_Yellow_Leaf_Curl_Virus', 'Late_blight', 'Leaf_Mold', 'Early_blight', 'Spider_mites Two-spotted_spider_mite', 'Tomato___healthy', 'Septoria_leaf_spot']
-
-
+tomato_labels = ['Tomato mosaic virus', 'Target Spot', 'Bacterial spot', 'Tomato Yellow Leaf Curl Virus', 'Late blight', 'Leaf Mold', 'Early blight', 'Spider mites Two-spotted spider mite', 'Tomato Healthy', 'Septoria leaf spot']
 
 def predict_apelsick(img):
     i = np.array(img) / 255.0
@@ -47,7 +46,9 @@ def predict_apelsick(img):
     pred_class = np.argmax(pred)
     confidence = pred[0][pred_class] * 100
     result = apelsick_labels[pred_class]
-    return result, confidence
+    info = apelsick_info[result]
+    return result, confidence, info['description'], info['solution']
+
 
 def predict_banana(img):
     i = np.array(img) / 255.0
@@ -59,7 +60,8 @@ def predict_banana(img):
     pred_class = np.argmax(pred)
     confidence = pred[0][pred_class] * 100
     result = banana_labels[pred_class]
-    return result, confidence
+    info = banana_info[result]
+    return result, confidence, info['description'], info['solution']
 
 def predict_corn(img):
     i = np.array(img) / 255.0
@@ -71,7 +73,8 @@ def predict_corn(img):
     pred_class = np.argmax(pred)
     confidence = pred[0][pred_class] * 100
     result = corn_labels[pred_class]
-    return result, confidence
+    info = corn_info[result]
+    return result, confidence, info['description'], info['solution']
 
 def predict_orange(img):
     i = np.array(img) / 255.0
@@ -83,7 +86,8 @@ def predict_orange(img):
     pred_class = np.argmax(pred)
     confidence = pred[0][pred_class] * 100
     result = orange_labels[pred_class]
-    return result, confidence
+    info = orange_info[result]
+    return result, confidence, info['description'], info['solution']
 
 def predict_potato(img):
     i = np.array(img) / 255.0
@@ -95,7 +99,8 @@ def predict_potato(img):
     pred_class = np.argmax(pred)
     confidence = pred[0][pred_class] * 100
     result = potato_labels[pred_class]
-    return result, confidence
+    info = potato_info[result]
+    return result, confidence, info['description'], info['solution']
 
 def predict_rice(img):
     i = np.array(img) / 255.0
@@ -107,7 +112,8 @@ def predict_rice(img):
     pred_class = np.argmax(pred)
     confidence = pred[0][pred_class] * 100
     result = rice_labels[pred_class]
-    return result, confidence
+    info = rice_info[result]
+    return result, confidence, info['description'], info['solution']
 
 def predict_cassava(img):
     i = np.array(img) / 255.0
@@ -119,7 +125,8 @@ def predict_cassava(img):
     pred_class = np.argmax(pred)
     confidence = pred[0][pred_class] * 100
     result = cassava_labels[pred_class]
-    return result, confidence
+    info = cassava_info[result]
+    return result, confidence, info['description'], info['solution']
 
 def predict_tomato(img):
     i = np.array(img) / 255.0
@@ -131,6 +138,7 @@ def predict_tomato(img):
     pred_class = np.argmax(pred)
     confidence = pred[0][pred_class] * 100
     result = tomato_labels[pred_class]
-    return result, confidence
+    info = tomato_info[result]
+    return result, confidence, info['description'], info['solution']
 
 
