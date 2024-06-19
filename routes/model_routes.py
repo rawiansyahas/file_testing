@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from controller.model_controller import predict_banana, predict_apelsick, predict_corn, predict_orange, predict_potato, predict_rice, predict_cassava, predict_tomato
 import io
 from PIL import Image
-from app import get_db_connection
+from db import get_db_connection
 
 predict_blueprint = Blueprint('predict_banana', __name__)
 

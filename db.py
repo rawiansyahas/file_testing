@@ -1,15 +1,19 @@
+import os
 import pymysql
 from dotenv import load_dotenv
-import os
 
-load_dotenv()  # Load environment variables from .env file
+load_dotenv()
+
+# Configure database connection
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_NAME = os.getenv('DB_NAME')
+DB_CONNECTION_NAME = os.getenv('DB_CONNECTION_NAME')
 
 def get_db_connection():
-    connection = pymysql.connect(
-        host=os.getenv('DB_HOST'),
-        user=os.getenv('DB_USER'),
-        password=os.getenv('DB_PASSWORD'),
-        db=os.getenv('DB_NAME'),
-        cursorclass=pymysql.cursors.DictCursor
+    return pymysql.connect(
+        user=DB_USER,
+        password=DB_PASSWORD,
+        database=DB_NAME,
+        unix_socket=f'/cloudsql/{DB_CONNECTION_NAME}'
     )
-    return connection
