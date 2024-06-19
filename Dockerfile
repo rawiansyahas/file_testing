@@ -11,8 +11,11 @@ WORKDIR $APP_HOME
 # Copy the requirements file first to leverage Docker cache
 COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Install gcc and dependencies for MySQL client
+RUN apt-get update && apt-get install -y gcc libmariadb-dev-compat libmariadb-dev && \
+    pip install --no-cache-dir -r requirements.txt && \
+    apt-get purge -y --auto-remove gcc libmariadb-dev-compat libmariadb-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy the rest of the application code
 COPY . .
@@ -21,8 +24,6 @@ COPY . .
 EXPOSE 8080
 
 # Define environment variables for Flask
-ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
 ENV PORT=8080
 
 # Run gunicorn when the container launches

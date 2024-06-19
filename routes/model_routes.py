@@ -115,7 +115,7 @@ def predict_cassava_route():
     
     image_bytes = file.read()
     img = Image.open(io.BytesIO(image_bytes))
-    img = img.resize((256, 256), Image.NEAREST)
+    img = img.resize((150, 150), Image.NEAREST)
     pred_img, confidence, description, solution = predict_cassava(img)
     return jsonify({
         "prediction": pred_img, 
@@ -132,7 +132,7 @@ def predict_tomato_route():
     
     image_bytes = file.read()
     img = Image.open(io.BytesIO(image_bytes))
-    img = img.resize((256, 256), Image.NEAREST)
+    img = img.resize((224, 224), Image.NEAREST)
     pred_img, confidence, description, solution = predict_tomato(img)
     return jsonify({
         "prediction": pred_img, 

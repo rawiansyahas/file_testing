@@ -28,11 +28,11 @@ rice_model_path = 'models/rice_disease.h5'
 rice_model = keras.models.load_model(rice_model_path)
 rice_labels = ['Brown Spot', 'Healthy', 'Leaf Blast', 'Neck_Blast']
 
-cassava_model_path = 'models/singconk.h5'
+cassava_model_path = 'models/cassava_inception_model.h5'
 cassava_model = keras.models.load_model(cassava_model_path)
 cassava_labels = ['Cassava Bacterial Blight', 'Cassava Brown Streak Disease', 'Cassava Green Mottle', 'Cassava Mosaic Disease', 'Healthy']
 
-tomato_model_path = 'models/tomatosick.h5'
+tomato_model_path = 'models/tomatodisease.h5'
 tomato_model = keras.models.load_model(tomato_model_path)
 tomato_labels = ['Tomato mosaic virus', 'Target Spot', 'Bacterial spot', 'Tomato Yellow Leaf Curl Virus', 'Late blight', 'Leaf Mold', 'Early blight', 'Spider mites Two-spotted spider mite', 'Tomato Healthy', 'Septoria leaf spot']
 
@@ -118,9 +118,9 @@ def predict_rice(img):
 def predict_cassava(img):
     i = np.array(img) / 255.0
     if len(i.shape) == 3:
-        i = i.reshape(1, 256, 256, 3)
+        i = i.reshape(1, 150, 150, 3)
     else:
-        i = i.reshape(1, 256, 256, 1)
+        i = i.reshape(1, 150, 150, 1)
     pred = cassava_model.predict(i)
     pred_class = np.argmax(pred)
     confidence = pred[0][pred_class] * 100
@@ -131,9 +131,9 @@ def predict_cassava(img):
 def predict_tomato(img):
     i = np.array(img) / 255.0
     if len(i.shape) == 3:
-        i = i.reshape(1, 256, 256, 3)
+        i = i.reshape(1, 224, 224, 3)
     else:
-        i = i.reshape(1, 256, 256, 1)
+        i = i.reshape(1, 224, 224, 1)
     pred = tomato_model.predict(i)
     pred_class = np.argmax(pred)
     confidence = pred[0][pred_class] * 100
