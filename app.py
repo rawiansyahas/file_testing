@@ -4,11 +4,8 @@ import os
 import pymysql
 from dotenv import load_dotenv
 import sys
-
-# Ensure the script can access the parent directory
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
@@ -21,14 +18,12 @@ DB_NAME = os.getenv('DB_NAME')
 DB_CONNECTION_NAME = os.getenv('DB_CONNECTION_NAME')
 
 def get_db_connection():
-    # Check if running in Google Cloud environment
-    if os.getenv('GAE_ENV', '').startswith('standard'):
-        # Use Unix socket for connection
-        unix_socket = f'/cloudsql/{DB_CONNECTION_NAME}'
-        return pymysql.connect(user=DB_USER, password=DB_PASSWORD, database=DB_NAME, unix_socket=unix_socket)
-    else:
-        # Local testing with Cloud SQL Proxy
-        return pymysql.connect(user=DB_USER, password=DB_PASSWORD, database=DB_NAME, host='127.0.0.1', port=3306)
+    return pymysql.connect(
+        user=DB_USER,
+        password=DB_PASSWORD,
+        database=DB_NAME,
+        unix_socket=f'/cloudsql/{DB_CONNECTION_NAME}'
+    )
 
 @app.route('/db_test')
 def db_test():
