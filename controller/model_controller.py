@@ -47,7 +47,7 @@ def predict_apelsick(img):
     confidence = pred[0][pred_class] * 100
     result = apelsick_labels[pred_class]
     info = apelsick_info[result]
-    return result, confidence, info['description'], info['solution']
+    return result, confidence, info['description'], info['solution'], img
 
 
 def predict_banana(img):
@@ -61,7 +61,7 @@ def predict_banana(img):
     confidence = pred[0][pred_class] * 100
     result = banana_labels[pred_class]
     info = banana_info[result]
-    return result, confidence, info['description'], info['solution']
+    return result, confidence, info['description'], info['solution'], img
 
 def predict_corn(img):
     i = np.array(img) / 255.0
@@ -74,7 +74,7 @@ def predict_corn(img):
     confidence = pred[0][pred_class] * 100
     result = corn_labels[pred_class]
     info = corn_info[result]
-    return result, confidence, info['description'], info['solution']
+    return result, confidence, info['description'], info['solution'], img
 
 def predict_orange(img):
     i = np.array(img) / 255.0
@@ -87,7 +87,7 @@ def predict_orange(img):
     confidence = pred[0][pred_class] * 100
     result = orange_labels[pred_class]
     info = orange_info[result]
-    return result, confidence, info['description'], info['solution']
+    return result, confidence, info['description'], info['solution'], img
 
 def predict_potato(img):
     i = np.array(img) / 255.0
@@ -100,7 +100,7 @@ def predict_potato(img):
     confidence = pred[0][pred_class] * 100
     result = potato_labels[pred_class]
     info = potato_info[result]
-    return result, confidence, info['description'], info['solution']
+    return result, confidence, info['description'], info['solution'], img
 
 def predict_rice(img):
     i = np.array(img) / 255.0
@@ -113,7 +113,7 @@ def predict_rice(img):
     confidence = pred[0][pred_class] * 100
     result = rice_labels[pred_class]
     info = rice_info[result]
-    return result, confidence, info['description'], info['solution']
+    return result, confidence, info['description'], info['solution'], img
 
 def predict_cassava(img):
     i = np.array(img) / 255.0
@@ -126,7 +126,7 @@ def predict_cassava(img):
     confidence = pred[0][pred_class] * 100
     result = cassava_labels[pred_class]
     info = cassava_info[result]
-    return result, confidence, info['description'], info['solution']
+    return result, confidence, info['description'], info['solution'], img
 
 def predict_tomato(img):
     i = np.array(img) / 255.0
@@ -139,6 +139,6 @@ def predict_tomato(img):
     confidence = pred[0][pred_class] * 100
     result = tomato_labels[pred_class]
     info = tomato_info[result]
-    return result, confidence, info['description'], info['solution']
+    return result, confidence, info['description'], info['solution'], img
 
 
