@@ -3,20 +3,22 @@ from controller.model_controller import predict_banana, predict_apelsick, predic
 import io
 from PIL import Image
 from db import get_db_connection
+from middleware.authentication_middleware import auth_required
 
 predict_blueprint = Blueprint('predict_banana', __name__)
-
-def save_prediction_to_db(image_bytes, prediction, confidence, description, solution):
+#Try Push Update Routes
+def save_prediction_to_db(image_bytes, prediction, confidence, description, solution,user_id):
     connection = get_db_connection()
     with connection.cursor() as cursor:
         cursor.execute(
-            'INSERT INTO predictions (image, prediction, confidence, description, solution) VALUES (%s, %s, %s, %s, %s)',
-            (image_bytes, prediction, confidence, description, solution)
+            'INSERT INTO predictions (image, prediction, confidence, description, solution,user_id) VALUES (%s, %s, %s, %s, %s, %s)',
+            (image_bytes, prediction, confidence, description, solution,user_id)
         )
     connection.commit()
     connection.close()
 
 @predict_blueprint.route('/predict/apple', methods=["POST"])
+@auth_required
 def predict_apelsick_route():
     file = request.files.get('file')
     if file is None or file.filename == "":
@@ -26,8 +28,10 @@ def predict_apelsick_route():
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((224, 224), Image.NEAREST)
     prediction, confidence, description, solution, _ = predict_apelsick(img)
-    save_prediction_to_db(image_bytes, prediction, confidence, description, solution)
+    user_id = request.user_id
+    save_prediction_to_db(image_bytes, prediction, confidence, description, solution,user_id)
     return jsonify({
+        "user_id" : user_id,
         "prediction": prediction, 
         "confidence": confidence,
         "description": description,
@@ -35,6 +39,7 @@ def predict_apelsick_route():
     })
 
 @predict_blueprint.route('/predict/banana', methods=["GET", "POST"])
+@auth_required
 def predict_banana_route():
     file = request.files.get('file')
     if file is None or file.filename == "":
@@ -44,8 +49,10 @@ def predict_banana_route():
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((150, 150), Image.NEAREST)
     prediction, confidence, description, solution, _ = predict_banana(img)
-    save_prediction_to_db(image_bytes, prediction, confidence, description, solution)
+    user_id = request.user_id
+    save_prediction_to_db(image_bytes, prediction, confidence, description, solution,user_id)
     return jsonify({
+        "user_id" : user_id,
         "prediction": prediction, 
         "confidence": confidence,
         "description": description,
@@ -53,6 +60,7 @@ def predict_banana_route():
     })
 
 @predict_blueprint.route('/predict/corn', methods=["GET", "POST"])
+@auth_required
 def predict_corn_route():
     file = request.files.get('file')
     if file is None or file.filename == "":
@@ -62,8 +70,10 @@ def predict_corn_route():
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((150, 150), Image.NEAREST)
     prediction, confidence, description, solution, _ = predict_corn(img)
-    save_prediction_to_db(image_bytes, prediction, confidence, description, solution)
+    user_id = request.user_id
+    save_prediction_to_db(image_bytes, prediction, confidence, description, solution,user_id)
     return jsonify({
+        "user_id" : user_id,
         "prediction": prediction, 
         "confidence": confidence,
         "description": description,
@@ -71,6 +81,7 @@ def predict_corn_route():
     })
 
 @predict_blueprint.route('/predict/orange', methods=["GET", "POST"])
+@auth_required
 def predict_orange_route():
     file = request.files.get('file')
     if file is None or file.filename == "":
@@ -80,8 +91,10 @@ def predict_orange_route():
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((64, 64), Image.NEAREST)
     prediction, confidence, description, solution, _ = predict_orange(img)
-    save_prediction_to_db(image_bytes, prediction, confidence, description, solution)
+    user_id = request.user_id
+    save_prediction_to_db(image_bytes, prediction, confidence, description, solution,user_id)
     return jsonify({
+        "user_id" : user_id,
         "prediction": prediction, 
         "confidence": confidence,
         "description": description,
@@ -89,6 +102,7 @@ def predict_orange_route():
     })
 
 @predict_blueprint.route('/predict/potato', methods=["GET", "POST"])
+@auth_required
 def predict_potato_route():
     file = request.files.get('file')
     if file is None or file.filename == "":
@@ -98,8 +112,10 @@ def predict_potato_route():
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((64, 64), Image.NEAREST)
     prediction, confidence, description, solution, _ = predict_potato(img)
-    save_prediction_to_db(image_bytes, prediction, confidence, description, solution)
+    user_id = request.user_id
+    save_prediction_to_db(image_bytes, prediction, confidence, description, solution,user_id)
     return jsonify({
+        "user_id" : user_id,
         "prediction": prediction, 
         "confidence": confidence,
         "description": description,
@@ -107,6 +123,7 @@ def predict_potato_route():
     })
 
 @predict_blueprint.route('/predict/rice', methods=["GET", "POST"])
+@auth_required
 def predict_rice_route():
     file = request.files.get('file')
     if file is None or file.filename == "":
@@ -116,8 +133,10 @@ def predict_rice_route():
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((224, 224), Image.NEAREST)
     prediction, confidence, description, solution, _ = predict_rice(img)
-    save_prediction_to_db(image_bytes, prediction, confidence, description, solution)
+    user_id = request.user_id
+    save_prediction_to_db(image_bytes, prediction, confidence, description, solution,user_id)
     return jsonify({
+        "user_id" : user_id,
         "prediction": prediction, 
         "confidence": confidence,
         "description": description,
@@ -125,6 +144,7 @@ def predict_rice_route():
     })
 
 @predict_blueprint.route('/predict/cassava', methods=["GET", "POST"])
+@auth_required
 def predict_cassava_route():
     file = request.files.get('file')
     if file is None or file.filename == "":
@@ -134,8 +154,10 @@ def predict_cassava_route():
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((150, 150), Image.NEAREST)
     prediction, confidence, description, solution, _ = predict_cassava(img)
-    save_prediction_to_db(image_bytes, prediction, confidence, description, solution)
+    user_id = request.user_id
+    save_prediction_to_db(image_bytes, prediction, confidence, description, solution,user_id)
     return jsonify({
+        "user_id" : user_id,
         "prediction": prediction, 
         "confidence": confidence,
         "description": description,
@@ -143,6 +165,7 @@ def predict_cassava_route():
     })
 
 @predict_blueprint.route('/predict/tomato', methods=["GET", "POST"])
+@auth_required
 def predict_tomato_route():
     file = request.files.get('file')
     if file is None or file.filename == "":
@@ -152,8 +175,10 @@ def predict_tomato_route():
     img = Image.open(io.BytesIO(image_bytes))
     img = img.resize((224, 224), Image.NEAREST)
     prediction, confidence, description, solution, _ = predict_tomato(img)
-    save_prediction_to_db(image_bytes, prediction, confidence, description, solution)
+    user_id = request.user_id
+    save_prediction_to_db(image_bytes, prediction, confidence, description, solution,user_id)
     return jsonify({
+        "user_id" : user_id,
         "prediction": prediction, 
         "confidence": confidence,
         "description": description,
